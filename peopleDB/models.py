@@ -48,12 +48,12 @@ class Developer(models.Model):
 
     recruit = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField("Имя разработчика", max_length=100, blank=True)
+    profile_link = models.URLField(null=True, blank=True)
     country = models.ForeignKey(Country, verbose_name="Страна", on_delete=models.SET_NULL, null=True)
     city = models.ForeignKey(City, verbose_name="Город", on_delete=models.SET_NULL, null=True)
     rank_position = models.CharField("Уровень", max_length=20, choices=RANK_CHOICES, default='none')
     position = models.CharField("Должность", max_length=20, blank=True)
     skills = TaggableManager("Навыки")
-    profile_link = models.URLField(null=True, blank=True)
     # resume =
     date_add = models.DateField('Дата добавления', auto_now_add=True)
 

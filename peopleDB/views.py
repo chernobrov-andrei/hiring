@@ -3,6 +3,17 @@ from .filters import DeveloperFilter
 from .models import Developer
 from .forms import StepRecruit, DevForm, MyForm
 from django.views.generic import CreateView, UpdateView
+from django.http import JsonResponse
+
+
+
+def validate_username(request):
+    name = request.GET.get('name', None)
+    data = {
+        'is_taken': Developer.objects.filter(name__iexact=name).exists()
+    }
+    return JsonResponse(data)
+
 
 
 

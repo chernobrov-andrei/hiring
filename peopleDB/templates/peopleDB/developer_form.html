@@ -3,6 +3,33 @@
 {% load crispy_forms_tags %}
 
 
+
+
+{% block javascript %}
+  <script>
+    $("#id_name").change(function () {
+        var name = $(this).val();
+
+      $.ajax({
+
+        url: '/ajax/validate_username/',
+        data: {
+          'name': name
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            alert("Такой разроб уже есть в базе.");
+          }
+        }
+      });
+
+    });
+  </script>
+{% endblock %}
+
+
+
 {% block content %}
 
         <div class="container" style="margin-top: 20px">

@@ -14,7 +14,7 @@ class StepRecruit(forms.ModelForm):
 class DevForm(forms.ModelForm):
      class Meta:
         model = Developer
-        fields = ('name', 'country', 'city', 'rank_position', 'position', 'skills', 'profile_link',)
+        fields = ('name', 'profile_link', 'country', 'city', 'rank_position', 'position', 'skills')
         widgets = {
             'skills': autocomplete.TaggitSelect2('select2_taggit')
         }
