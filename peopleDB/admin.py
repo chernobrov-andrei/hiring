@@ -9,7 +9,7 @@ class DeveloperAdmin(admin.ModelAdmin):
         'recruit',
         'step_recruit'
     )
-    list_filter = ('rank_position', 'position', 'step_recruit',)
+    list_filter = ('rank_position', 'position', 'step_recruit', 'date_add',)
     search_fields = ('name',)
 
 
