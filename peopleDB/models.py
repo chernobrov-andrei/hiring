@@ -40,9 +40,18 @@ class Developer(models.Model):
     STEP_RECRUIT_CHOICES = {
 
         ('свободен', 'Свободен'),
+        ('запрос на добавление', 'Запрос на добавление'),
         ('контакт', 'Контакт'),
         ('резюме отправлено', 'Резюме отправлено'),
         ('вакансия закрыта', 'Вакансия закрыта'),
+
+    }
+
+    DEV_COMMENT_CHOICES = {
+
+        ('возможно ищет работу', 'Возможно ищет работу'),
+        ('не ищет работу', 'Не ищет работу'),
+
 
     }
 
@@ -54,12 +63,13 @@ class Developer(models.Model):
     rank_position = models.CharField("Уровень", max_length=20, choices=RANK_CHOICES, default='none')
     position = models.CharField("Должность", max_length=20, blank=True)
     skills = TaggableManager("Навыки")
-    # resume =
+    comment = models.TextField("Комментарий", blank=True)
     date_add = models.DateField('Дата добавления', auto_now_add=True)
 
 
     """Шаги рекрутинга"""
 
+    job_opotunity = models.CharField("Ищет или нет", max_length=40, choices=DEV_COMMENT_CHOICES, default='возможно ищет работу')
     step_recruit = models.CharField("Этап рекрутинга", max_length=40, choices=STEP_RECRUIT_CHOICES, default='свободен')
 
     class Meta:

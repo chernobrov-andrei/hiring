@@ -6,10 +6,10 @@ class DeveloperAdmin(admin.ModelAdmin):
         'name',
         'rank_position',
         'position',
-        'recruit',
-        'step_recruit'
+        'step_recruit',
+        'job_opotunity',
     )
-    list_filter = ('rank_position', 'position', 'step_recruit', 'date_add',)
+    list_filter = ('rank_position', 'position', 'step_recruit', 'date_add', 'job_opotunity',)
     search_fields = ('name',)
 
 
