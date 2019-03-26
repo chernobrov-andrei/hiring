@@ -1,39 +1,50 @@
 {% extends 'peopleDB/base.html' %}
+{% load base_tags %}
 {% load crispy_forms_tags %}
 {% load static %}
 
 {% block content %}
-    <h1 class="title">Developers list</h1>
-    <h3 class="title">Всего в базе {{ list.count}}</h3>
-    <div class="container">
+
+    <div class="container" style="background-color: azure;
+    border: 2px solid;
+    float: left;
+    width: 20%;
+    margin-top: 10px;
+    margin-left: 1%;
+    padding-top: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-bottom: 1%;
+    ">
         <!-- Content here -->
         <form method="get">
             {{ filter.form|crispy }}
-            <button type="submit" class="btn btn-secondary btn-icon"><span class="icon"><i class="fas fa-search"></i></span>Search</button>
+            <button type="submit" class="btn btn-secondary btn-icon" style="float: right"><span class="icon"><i class="fas fa-search"></i></span>Search</button>
+           <p> Найдено: {{ filter.qs.count }}</p>
         </form>
 
     </div>
 
-        <br>
-        <h2 class="t">Найдено: {{ filter.qs.count }}</h2>
+    <div style="margin-right: 2%; margin-left: 2%; float: right; width: 75%">
         {% for d in filter.qs %}
+
             <div class="border">
-                <div class="header_name">
+                <div>
                     {{ d.name }}
                 </div>
-                <div class="header_city">{{ d.city }}</div>
-                <div>{{ d.rank_position }}  {{ d.position }}</div>
+                <div>{{ d.city }}</div>
+                <div>{{ d.rank_position }} {{ d.position }}</div>
                 <div>{{ d.date_add }}</div>
-                <div></div>
                 <div>{{ d.step_recruit }}</div>
                 <div class="bottom">
-                    <a href="{% url 'dev_view' id=d.id%}"><button type="button" class="btn btn-primary btn-circle"><i class="fas fa-eye"></i></button></a>
+                    <a href="{% url 'dev_view' id=d.id %}">
+                        <button type="button" class="btn btn-primary btn-circle" style="margin-top: 175%; margin-left: 50%"><i class="fas fa-eye"></i></button>
+                    </a>
                 </div>
 
             </div>
-
-
         {% endfor %}
+    </div>
 
 
 

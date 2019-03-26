@@ -62,6 +62,8 @@ def list_view(request):
     context = dict(filter=user_filter, list=user_list, step=form)
     return render(request, 'peopleDB/filter/list.html', context)
 
+
+
 def dev_view(request, id):
     dev = Developer.objects.get(id=id)
 
