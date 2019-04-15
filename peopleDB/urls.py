@@ -7,6 +7,7 @@ urlpatterns = [
 
     path('', list_view, name='list'),
     path('<int:id>/', dev_view, name='dev_view'),
+    path('add/', DevCreateView.as_view(), name='dev_add'),
     path(
         'autocomplete/',
         autocomplete.Select2QuerySetView.as_view(
@@ -14,7 +15,7 @@ urlpatterns = [
         ),
         name='select2_taggit',
     ),
-    path('add/', DevCreateView.as_view(), name='dev_add'),
+
     path('myform/', MyDevCreateView.as_view(), name='my_dev_add'),
     path('ajax/validate_username/', validate_username, name='validate_username'),
 

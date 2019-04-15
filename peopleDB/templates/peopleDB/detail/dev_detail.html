@@ -7,6 +7,8 @@
         <div>{{ dev.city }}</div>
         <div>{{ dev.position }}</div>
         <div>{{ dev.rank_position }}</div>
+       <p>{{ dev.skills.all|join:", " }}</p>
+
         <div><a href="{{ dev.profile_link }}">Профиль</a></div>
         <div></div>
         <div></div>

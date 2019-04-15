@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from .filters import DeveloperFilter
 from .models import Developer
-from .forms import StepRecruit, DevForm, MyForm
-from django.views.generic import CreateView, UpdateView
+from taggit.models import Tag
+from .forms import DevForm, MyForm
+from django.views.generic import CreateView
 from django.http import JsonResponse
 
 
@@ -57,9 +58,8 @@ class MyDevCreateView(CreateView):
 def list_view(request):
     user_list = Developer.objects.all()
     user_filter = DeveloperFilter(request.GET, queryset=user_list)
-    form = StepRecruit()
 
-    context = dict(filter=user_filter, list=user_list, step=form)
+    context = dict(filter=user_filter, list=user_list)
     return render(request, 'peopleDB/filter/list.html', context)
 
 

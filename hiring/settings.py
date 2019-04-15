@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_select2',
     'django_filters',
     'widget_tweaks',
+
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

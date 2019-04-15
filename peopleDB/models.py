@@ -3,6 +3,22 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 
 
+class Company(models.Model):
+    """Название компании куда ищим разроба"""
+    name_company = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name_company
+
+class Vacancy(models.Model):
+    """Вакансия"""
+    name_company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    vacancy = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.vacancy
+
+
 class Country(models.Model):
     """Страна"""
     name = models.CharField(max_length=30)
@@ -35,20 +51,9 @@ class Developer(models.Model):
 
     }
 
-    """Этап рекрутирования"""
-
-    STEP_RECRUIT_CHOICES = {
-
-        ('свободен', 'Свободен'),
-        ('запрос на добавление', 'Запрос на добавление'),
-        ('в контактах', 'В контактак'),
-
-    }
-
-    DEV_COMMENT_CHOICES = {
-
-        ('возможно ищет работу', 'Возможно ищет работу'),
-        ('не ищет работу', 'Не ищет работу'),
+    STEP_CHOICES = {
+        ('none', 'None'),
+        ('CV отправлено', 'CV отправлено'),
 
 
     }
@@ -64,11 +69,10 @@ class Developer(models.Model):
     comment = models.TextField("Комментарий", blank=True)
     date_add = models.DateField('Дата добавления', auto_now_add=True)
 
+    to_company = models.ForeignKey(Company, verbose_name="В какую компанию", on_delete=models.SET_NULL, null=True, blank=True)
+    to_vacancy = models.ForeignKey(Vacancy, verbose_name="На должность", on_delete=models.SET_NULL, null=True, blank=True)
+    step_recruit = models.CharField("В процессе", max_length=20, choices=STEP_CHOICES, default='none')
 
-    """Шаги рекрутинга"""
-
-    job_opotunity = models.CharField("Ищет или нет", max_length=40, choices=DEV_COMMENT_CHOICES, default='возможно ищет работу')
-    step_recruit = models.CharField("Этап рекрутинга", max_length=40, choices=STEP_RECRUIT_CHOICES, default='свободен')
 
     class Meta:
         ordering = ['-date_add']
