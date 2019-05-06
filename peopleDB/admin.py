@@ -17,6 +17,16 @@ class DeveloperAdmin(admin.ModelAdmin):
     list_filter = ('to_company', 'date_add','step_recruit')
     search_fields = ('name',)
 
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = (
+        'name',
+        'position',
+        'link'
+
+    )
+    list_filter = ('city', 'position')
+    search_fields = ('link',)
 
 admin.site.register(Country)
 admin.site.register(City)

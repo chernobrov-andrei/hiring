@@ -14,9 +14,3 @@ class DevForm(forms.ModelForm):
         }
 
 
-class MyForm(forms.ModelForm):
-    class Meta:
-        model = Developer
-
-        fields = ('name', 'country', 'city', 'rank_position', 'position', 'skills', 'profile_link',)
-

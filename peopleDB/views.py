@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from .filters import DeveloperFilter
-from .models import Developer
+from .models import Profile, Developer
 from taggit.models import Tag
-from .forms import DevForm, MyForm
+from .forms import DevForm
 from django.views.generic import CreateView
 from django.http import JsonResponse
 
@@ -11,7 +11,7 @@ from django.http import JsonResponse
 def validate_username(request):
     name = request.GET.get('name', None)
     data = {
-        'is_taken': Developer.objects.filter(name__iexact=name).exists()
+        'is_taken': Profile.objects.filter(name__iexact=name).exists()
     }
     return JsonResponse(data)
 
@@ -19,7 +19,7 @@ def validate_username(request):
 
 
 class DevCreateView(CreateView):
-    model = Developer
+    model = Profile
     form_class = DevForm
 
     def form_valid(self, form):
@@ -34,41 +34,10 @@ class DevCreateView(CreateView):
         return redirect("dev_add")
 
 
-
-class MyDevCreateView(CreateView):
-    model = Developer
-    form_class = MyForm
-
-    def form_valid(self, form):
-        """Автоматическое добавление пользователя"""
-        object = form.save(commit=False)
-        object.recruit = self.request.user
-        object.save()
-        form.save_m2m()
-        return redirect("my_dev_add")
-
-    def success_url(self):
-        return redirect("my_dev_add")
-
-
-
-
-
-
 def list_view(request):
-    user_list = Developer.objects.all()
+    user_list = Profile.objects.all()
     user_filter = DeveloperFilter(request.GET, queryset=user_list)
 
     context = dict(filter=user_filter, list=user_list)
     return render(request, 'peopleDB/filter/list.html', context)
 
-
-
-def dev_view(request, id):
-    dev = Developer.objects.get(id=id)
-
-    context = {
-        'dev': dev,
-
-    }
-    return render(request, 'peopleDB/detail/dev_detail.html', context)

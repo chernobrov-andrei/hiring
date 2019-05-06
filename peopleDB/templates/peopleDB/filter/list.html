@@ -2,9 +2,11 @@
 {% load static %}
 {% load base_tags %}
 {% load crispy_forms_tags %}
+{% load widget_tweaks %}
 
 
 {% block content %}
+
 
     <div class="container" style="background-color: azure;
     border: 1px solid;
@@ -19,12 +21,13 @@
         <!-- Content here -->
         <form method="get">
             <div class="form-row">
-                <div class="form-group col-mb-3 mb-0">
-                     {{ filter.form.city|as_crispy_field }}
-                </div>
-                <div class="form-group col-md-6 mb-0">
-                     {{ filter.form.position|as_crispy_field }}
-                </div>
+                <p>Город:</p> {{ filter.form.city|add_class:'js-city-multiple'}}
+            </div>
+            <div>
+                <p>Навыки:</p>{{ filter.form.skills|add_class:'js-skills-multiple'}}
+            </div>
+            <div>
+                <p>Должность:</p>{{ filter.form.position}}
             </div>
 
             <button type="submit" class="btn btn-secondary btn-icon" style="float: right"><span class="icon"><i class="fas fa-search"></i></span>Search</button>
@@ -34,23 +37,20 @@
     </div>
 
     <div style="margin-right: 2%; margin-left: 2%; float: right; width: 75%">
-        
+
         {% for d in filter.qs %}
-
-            <div class="card">
-                <div class="card-header"><i class="fas fa-user-tie"></i><h5><a href="{% url 'dev_view' id=d.id %}">{{ d.name }}</a></h5>
-                </div>
-            <div class="card-body">
-                <div><h6>{{ d.city }}</h6></div>
-                <div>{{ d.rank_position }} {{ d.position }}</div>
-            </div>
-
-                <h5>Skills: </h5>
-                <div class="card-footer">{{ d.skills.all|join:", " }}</div>
-             </div>
+            <p>{{ d.name }} - {{ d.position }} - {{ d.city }} -<a href="{{ d.link }}">link to profile</a></p>
         {% endfor %}
     </div>
 
+    {% block javascript %}
+        <script>
+            $(document).ready(function () {
+                $('.js-city-multiple').select2();
+                $('.js-skills-multiple').select2();
 
+            });
+        </script>
+    {% endblock %}
 
 {% endblock %}

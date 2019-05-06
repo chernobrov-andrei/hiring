@@ -74,10 +74,23 @@ class Developer(models.Model):
     step_recruit = models.CharField("В процессе", max_length=20, choices=STEP_CHOICES, default='none')
 
 
-    class Meta:
-        ordering = ['-date_add']
 
-def __str__(self):
-    return self.name
+    def __str__(self):
+        return self.name
+
+
+
+class Profile(models.Model):
+    name = models.CharField("Имя разработчика", max_length=100, blank=True)
+    position = models.CharField("Должность", max_length=200, blank=True)
+    country = models.CharField(max_length=100, blank=True, null=True)
+    city = models.CharField(max_length=100, blank=True, null=True)
+    skills = TaggableManager("Навыки", blank=True)
+    link = models.URLField(blank=True, null=True)
+    date_add = models.DateField('Дата добавления', auto_now_add=True)
+
+
+    def __str__(self):
+        return self.name
 
 
